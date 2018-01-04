@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         initList();
-
-
     }
 
     private void initList() {
@@ -65,25 +63,25 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject o = arrayAll.getJSONObject(i);
                         switch (o.getString("Id")) {
                             case "baron1898":
-                                wachttijdBaron = o.getInt("WaitingTime");
+                                wachttijdBaron = fetchAttraction(o);
                                 break;
                             case "bobbaan":
-                                wachttijdBob = o.getInt("WaitingTime");
+                                wachttijdBob = fetchAttraction(o);
                                 break;
                             case "devliegendehollander":
-                                wachttijdHollander = o.getInt("WaitingTime");
+                                wachttijdHollander = fetchAttraction(o);
                                 break;
                             case "jorisendedraak":
-                                wachttijdJoris = o.getInt("WaitingTime");
+                                wachttijdJoris = fetchAttraction(o);
                                 break;
                             case "pandadroom":
-                                wachttijdPanda = o.getInt("WaitingTime");
+                                wachttijdPanda = fetchAttraction(o);
                                 break;
                             case "python":
-                                wachttijdPython = o.getInt("WaitingTime");
+                                wachttijdPython = fetchAttraction(o);
                                 break;
                             case "vogelrok":
-                                wachttijdVogel = o.getInt("WaitingTime");
+                                wachttijdVogel = fetchAttraction(o);
                                 break;
                         }
 
@@ -112,5 +110,16 @@ public class MainActivity extends AppCompatActivity {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+    public int fetchAttraction (JSONObject o){
+        try {
+            if (o.getString("State") != "open"){
+                return -1;
+            }
+            return o.getInt("WaitingTime");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return -100;
+        }
     }
 }

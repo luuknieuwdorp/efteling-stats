@@ -38,7 +38,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         holder.heading.setText(item.getHeading());
         holder.image.setImageResource(item.getPathToImage());
-        holder.waitingTime.setText(String.valueOf(item.getWaitingTime()) + " min");
+        if (item.getWaitingTime() == -1){
+            holder.waitingTime.setText("Gesloten");
+        } else {
+            holder.waitingTime.setText(String.valueOf(item.getWaitingTime()) + " min");
+        }
 
         final int count = item.getCount();
 
