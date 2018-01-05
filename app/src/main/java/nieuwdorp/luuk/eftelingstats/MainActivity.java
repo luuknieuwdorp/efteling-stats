@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public int fetchAttraction (JSONObject o){
         try {
-            if (o.getString("State") != "open"){
+            if (!o.getString("State").equals("open")){
                 return -1;
             }
             return o.getInt("WaitingTime");
