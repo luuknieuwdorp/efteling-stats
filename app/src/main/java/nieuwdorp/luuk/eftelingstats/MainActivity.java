@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private List<EftelingItem> eftelingItems;
-    private int wachttijdBaron;
+    private int wachttijdBaron = 0;
     private int wachttijdBob = 0;
     private int wachttijdHollander = 0;
     private int wachttijdJoris = 0;
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.AttractionList);
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         initList();
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Wachttijden laden...");
         progressDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_WACHTTIJD, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     }
+
                     eftelingItems = new ArrayList<>();
                     eftelingItems.add(new EftelingItem("Baron 1898", MainActivity.this, wachttijdBaron));
                     eftelingItems.add(new EftelingItem("De Bobbaan", MainActivity.this, wachttijdBob));
@@ -111,9 +112,10 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-    public int fetchAttraction (JSONObject o){
+
+    public int fetchAttraction(JSONObject o) {
         try {
-            if (!o.getString("State").equals("open")){
+            if (!o.getString("State").equals("open")) {
                 return -1;
             }
             return o.getInt("WaitingTime");
